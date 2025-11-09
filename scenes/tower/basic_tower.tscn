@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2lap5r7m8n3q"]
+
+[ext_resource type="Script" path="res://scripts/tower.gd" id="1_tower"]
+[ext_resource type="PackedScene" uid="uid://c4q5xr8yj3k8n" path="res://scenes/projectile/projectile.tscn" id="2_projectile"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="3_icon"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 150.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
+radius = 32.0
+
+[node name="Tower" type="Node2D"]
+script = ExtResource("1_tower")
+projectile_scene = ExtResource("2_projectile")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.3, 0.5, 1, 1)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_icon")
+
+[node name="RangeArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 1.0
+autostart = true
+
+[node name="RangeIndicator" type="Line2D" parent="."]
+points = PackedVector2Array()
+width = 2.0
+default_color = Color(0.5, 0.5, 1, 0.3)
+
+[node name="ClickArea" type="Area2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+shape = SubResource("CircleShape2D_2")

@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8m4qar3n2k5q"]
+
+[ext_resource type="Script" uid="uid://dykd6uya8dclw" path="res://scripts/main_menu.gd" id="1_main_menu"]
+[ext_resource type="Texture2D" uid="uid://dosta8he0ssib" path="res://title.jpg" id="2_title"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main_menu")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_title")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 391.0
+offset_top = 476.0
+offset_right = 487.0
+offset_bottom = 566.0
+flat = true
+
+[node name="SettingsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 472.0
+offset_right = 625.0
+offset_bottom = 571.0
+flat = true
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 665.0
+offset_top = 477.0
+offset_right = 750.0
+offset_bottom = 564.0
+flat = true

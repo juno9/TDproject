@@ -1,0 +1,48 @@
+[gd_scene load_steps=10 format=3 uid="uid://b5k8p2r7nan4q"]
+
+[ext_resource type="Script" uid="uid://bsnhtyt37ppl" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://biprqmh076ur0" path="res://scripts/game_manager.gd" id="2_game_manager"]
+[ext_resource type="PackedScene" uid="uid://bvn7q3r2m5k8p" path="res://scenes/enemy/enemy.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://beb653nx32rd0" path="res://scenes/ui/game_ui.tscn" id="4_ui"]
+[ext_resource type="PackedScene" uid="uid://d2lap5r7m8n3q" path="res://scenes/tower/basic_tower.tscn" id="5_tower"]
+[ext_resource type="Script" uid="uid://ccklje4atu4i8" path="res://scripts/tower_placer.gd" id="6_placer"]
+[ext_resource type="PackedScene" uid="uid://bm5w7q8r3n4k2" path="res://scenes/ui/tower_menu.tscn" id="7_tower_menu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_over_ui.tscn" id="8_game_over_ui"]
+
+[sub_resource type="Curve2D" id="Curve2D_1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 50, 300, 0, 0, 0, 0, 300, 300, 0, 0, 0, 0, 300, 100, 0, 0, 0, 0, 600, 100, 0, 0, 0, 0, 600, 400, 0, 0, 0, 0, 900, 400)
+}
+point_count = 6
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("2_game_manager")
+enemy_scene = ExtResource("3_enemy")
+
+[node name="SpawnTimer" type="Timer" parent="GameManager"]
+
+[node name="WaveTimer" type="Timer" parent="GameManager"]
+
+[node name="EnemyPath" type="Path2D" parent="GameManager"]
+curve = SubResource("Curve2D_1")
+
+[node name="Line2D" type="Line2D" parent="GameManager/EnemyPath"]
+points = PackedVector2Array(50, 300, 300, 300, 300, 100, 600, 100, 600, 400, 900, 400)
+width = 20.0
+default_color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="TowerPlacer" type="Node2D" parent="."]
+script = ExtResource("6_placer")
+tower_scene = ExtResource("5_tower")
+
+[node name="GameUI" parent="." instance=ExtResource("4_ui")]
+
+[node name="TowerMenu" parent="." instance=ExtResource("7_tower_menu")]
+
+[node name="GameOverUI" parent="." instance=ExtResource("8_game_over_ui")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(480, 320)
