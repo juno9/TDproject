@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d2lap5r7m8n3q" path="res://scenes/tower/basic_tower.tscn" id="5_tower"]
 [ext_resource type="Script" uid="uid://ccklje4atu4i8" path="res://scripts/tower_placer.gd" id="6_placer"]
 [ext_resource type="PackedScene" uid="uid://bm5w7q8r3n4k2" path="res://scenes/ui/tower_menu.tscn" id="7_tower_menu"]
-[ext_resource type="PackedScene" path="res://scenes/ui/game_over_ui.tscn" id="8_game_over_ui"]
+[ext_resource type="PackedScene" uid="uid://c7oas4r8m3p5k" path="res://scenes/ui/game_over_ui.tscn" id="8_game_over_ui"]
 
 [sub_resource type="Curve2D" id="Curve2D_1"]
 _data = {
@@ -27,11 +27,13 @@ enemy_scene = ExtResource("3_enemy")
 [node name="WaveTimer" type="Timer" parent="GameManager"]
 
 [node name="EnemyPath" type="Path2D" parent="GameManager"]
+position = Vector2(-6.4705887, -41.66667)
+scale = Vector2(1.1294118, 1.4166666)
 curve = SubResource("Curve2D_1")
 
 [node name="Line2D" type="Line2D" parent="GameManager/EnemyPath"]
 points = PackedVector2Array(50, 300, 300, 300, 300, 100, 600, 100, 600, 400, 900, 400)
-width = 20.0
+width = 40.0
 default_color = Color(0.6, 0.4, 0.2, 1)
 
 [node name="TowerPlacer" type="Node2D" parent="."]

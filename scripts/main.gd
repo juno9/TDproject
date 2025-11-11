@@ -78,6 +78,10 @@ func _on_tower_placed(tower: Node2D) -> void:
 	else:
 		print("타워에 clicked 시그널이 없습니다!")
 
+	# 타워 배치 후 타워 메뉴 숨기기
+	if tower_menu and tower_menu.visible:
+		tower_menu.hide()
+
 func _on_tower_clicked(tower: Node2D) -> void:
 	print("타워 클릭됨: ", tower.name)
 	if tower_menu:

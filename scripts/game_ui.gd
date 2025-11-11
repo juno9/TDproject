@@ -10,12 +10,16 @@ signal tower_button_pressed
 @onready var score_label: Label = $Panel/VBoxContainer/ScoreLabel
 @onready var tower_button: Button = $Panel/VBoxContainer/TowerButton
 @onready var hint_label: Label = $HintLabel
+@onready var speed_button: Button = $SpeedButton
 
 var game_manager: Node = null
+var is_speed_doubled: bool = false
 
 func _ready() -> void:
 	if tower_button:
 		tower_button.pressed.connect(_on_tower_button_pressed)
+	if speed_button:
+		speed_button.pressed.connect(_on_speed_button_pressed)
 
 func set_game_manager(manager: Node) -> void:
 	game_manager = manager
@@ -53,3 +57,15 @@ func show_hint(message: String, duration: float = 2.0) -> void:
 func hide_hint() -> void:
 	if hint_label:
 		hint_label.visible = false
+
+func _on_speed_button_pressed() -> void:
+	is_speed_doubled = not is_speed_doubled
+
+	if is_speed_doubled:
+		Engine.time_scale = 2.0
+		speed_button.text = "X2"
+	else:
+		Engine.time_scale = 1.0
+		speed_button.text = "X1"
+
+	print("게임 속도 변경: ", Engine.time_scale)

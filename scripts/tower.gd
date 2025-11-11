@@ -73,7 +73,8 @@ func set_preview_mode(preview: bool) -> void:
 	if range_indicator: range_indicator.visible = preview
 	if is_preview and attack_timer: attack_timer.stop()
 	if click_area: click_area.input_pickable = not preview
-	modulate = Color(1, 1, 1, 0.7) if is_preview else Color(1, 1, 1, 1)
+	# 프리뷰 모드일 때 파란색으로 설정 (배치 가능 상태)
+	modulate = Color(0.5, 0.5, 1.0, 0.7) if is_preview else Color(1, 1, 1, 1)
 
 func _process(_delta: float) -> void:
 	if is_preview: return
