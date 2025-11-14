@@ -15,6 +15,16 @@ var level: int = 1
 var upgrade_cost: int = 75
 var max_level: int = 5
 
+# 개별 업그레이드 레벨
+var speed_upgrade_level: int = 0
+var damage_upgrade_level: int = 0
+var range_upgrade_level: int = 0
+
+# 기본 스탯 (업그레이드 계산용)
+var base_attack_range: float = 150.0
+var base_attack_damage: float = 25.0
+var base_attack_speed: float = 1.0
+
 var current_target: Node2D = null
 var can_attack: bool = true
 var enemies_in_range: Array[Node2D] = []
@@ -28,16 +38,29 @@ var is_preview: bool = false
 @onready var click_area: Area2D = $ClickArea # 씬에 추가해야 할 Area2D
 
 func _ready() -> void:
+	print("=== 타워 _ready 시작 ===")
+	print("타워 이름: ", name)
+	print("is_preview: ", is_preview)
+
+	# 기본 스탯 저장
+	base_attack_range = attack_range
+	base_attack_damage = attack_damage
+	base_attack_speed = attack_speed
+
 	update_stats_by_level()
-	
+
 	attack_timer.timeout.connect(_on_attack_timer_timeout)
 	range_area.area_entered.connect(_on_area_entered_range)
 	range_area.area_exited.connect(_on_area_exited_range)
-	click_area.input_event.connect(_on_input_event)
+
+	# ClickArea의 input_event는 사용하지 않음 (불안정함)
+	# 대신 _unhandled_input으로 클릭 감지
 
 	draw_range_indicator()
 	if not is_preview:
 		range_indicator.visible = false
+
+	print("=== 타워 _ready 완료 ===")
 
 func set_initial_cost(initial_cost: int) -> void:
 	cost = initial_cost
@@ -70,9 +93,12 @@ func draw_range_indicator() -> void:
 
 func set_preview_mode(preview: bool) -> void:
 	is_preview = preview
+	print("타워 프리뷰 모드 설정: ", preview)
 	if range_indicator: range_indicator.visible = preview
 	if is_preview and attack_timer: attack_timer.stop()
-	if click_area: click_area.input_pickable = not preview
+	if click_area:
+		click_area.input_pickable = not preview
+		print("ClickArea input_pickable: ", click_area.input_pickable)
 	# 프리뷰 모드일 때 파란색으로 설정 (배치 가능 상태)
 	modulate = Color(0.5, 0.5, 1.0, 0.7) if is_preview else Color(1, 1, 1, 1)
 
@@ -123,11 +149,24 @@ func attack(target: Node2D) -> void:
 		if target.has_method("take_damage"):
 			target.take_damage(attack_damage)
 
-func _on_input_event(_viewport, event: InputEvent, _shape_idx: int) -> void:
-	if is_preview: return
+func _input(event: InputEvent) -> void:
+	if is_preview:
+		return
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print("타워 input_event 감지됨!")
-		clicked.emit(self)
+		print("[타워] _input 호출됨 - 타워: ", name)
+		var mouse_pos = get_global_mouse_position()
+		var distance = global_position.distance_to(mouse_pos)
+		print("[타워] 마우스 위치: ", mouse_pos, ", 타워 위치: ", global_position, ", 거리: ", distance)
+
+		# 타워 클릭 반경 체크 (32픽셀)
+		if distance <= 32.0:
+			print("=== 타워 클릭 감지! ===")
+			print("타워 이름: ", name)
+			print("마우스 거리: ", distance)
+			clicked.emit(self)
+			# 이벤트를 소비하여 다른 타워가 처리하지 않도록
+			get_viewport().set_input_as_handled()
 
 # --- 업그레이드 및 판매 기능 ---
 
@@ -142,6 +181,26 @@ func upgrade() -> void:
 	upgrade_cost = floori(upgrade_cost * 1.5) # 다음 업그레이드 비용 증가
 	update_stats_by_level()
 	# 레벨업 이펙트 등을 여기에 추가 가능
+
+# 개별 업그레이드 기능
+func upgrade_stat(stat_type: String) -> void:
+	match stat_type:
+		"speed":
+			speed_upgrade_level += 1
+			attack_speed = base_attack_speed * pow(1.2, speed_upgrade_level)
+			attack_timer.wait_time = 1.0 / attack_speed
+			print("공격속도 업그레이드! 레벨: %d, 속도: %.2f" % [speed_upgrade_level, attack_speed])
+		"damage":
+			damage_upgrade_level += 1
+			attack_damage = base_attack_damage * pow(1.5, damage_upgrade_level)
+			print("공격력 업그레이드! 레벨: %d, 데미지: %.0f" % [damage_upgrade_level, attack_damage])
+		"range":
+			range_upgrade_level += 1
+			attack_range = base_attack_range * pow(1.2, range_upgrade_level)
+			if range_collision.shape is CircleShape2D:
+				range_collision.shape.radius = attack_range
+			draw_range_indicator()
+			print("사정거리 업그레이드! 레벨: %d, 사거리: %.0f" % [range_upgrade_level, attack_range])
 
 func sell() -> void:
 	var refund = floori(cost * 0.7)

@@ -34,7 +34,10 @@ width = 2.0
 default_color = Color(0.5, 0.5, 1, 0.3)
 
 [node name="ClickArea" type="Area2D" parent="."]
+z_index = 10
 input_pickable = true
+monitorable = false
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
 shape = SubResource("CircleShape2D_2")

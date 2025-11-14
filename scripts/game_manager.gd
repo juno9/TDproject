@@ -4,6 +4,7 @@ extends Node2D
 
 signal wave_completed
 signal game_over
+signal game_clear
 
 @export var starting_gold: int = 200
 @export var starting_lives: int = 20
@@ -38,6 +39,11 @@ func _ready() -> void:
 
 func start_wave() -> void:
 	if is_spawning:
+		return
+
+	# 5 웨이브 이상이면 웨이브 시작 안함
+	if current_wave >= 5:
+		print("최대 웨이브(5)에 도달했습니다!")
 		return
 
 	current_wave += 1
@@ -101,6 +107,13 @@ func _on_enemy_reached_end() -> void:
 func check_wave_complete() -> void:
 	if enemies_alive <= 0 and not is_spawning:
 		wave_completed.emit()
+
+		# 5 웨이브 클리어 시 게임 클리어
+		if current_wave >= 5:
+			print("=== 게임 클리어! ===")
+			game_clear.emit()
+			return
+
 		wave_timer.start(wave_interval)
 
 func _on_wave_timer_timeout() -> void:

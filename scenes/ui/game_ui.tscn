@@ -5,72 +5,161 @@
 [node name="GameUI" type="CanvasLayer"]
 script = ExtResource("1_ui")
 
-[node name="Panel" type="Panel" parent="."]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 250.0
-offset_bottom = 200.0
+[node name="TopLeftPanel" type="HBoxContainer" parent="."]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 300.0
+offset_bottom = 55.0
+theme_override_constants/separation = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="LivesContainer" type="HBoxContainer" parent="TopLeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeartIcon" type="Label" parent="TopLeftPanel/LivesContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 28
+text = "❤"
+
+[node name="LivesLabel" type="Label" parent="TopLeftPanel/LivesContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "199"
+vertical_alignment = 1
+
+[node name="GoldContainer" type="HBoxContainer" parent="TopLeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CoinIcon" type="Label" parent="TopLeftPanel/GoldContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "🪙"
+
+[node name="GoldLabel" type="Label" parent="TopLeftPanel/GoldContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "$1,542"
+vertical_alignment = 1
+
+[node name="TopRightPanel" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 55.0
+grow_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="RoundContainer" type="Panel" parent="TopRightPanel"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+
+[node name="RoundLabel" type="Label" parent="TopRightPanel/RoundContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -12.0
+offset_right = 40.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "17/40"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="TopRightPanel"]
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+text = "⚙"
+flat = true
+
+[node name="UpgradesButton" type="Button" parent="TopRightPanel"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "UPGRADES"
+
+[node name="RightPanel" type="Panel" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -140.0
+offset_top = 80.0
+offset_right = -15.0
+offset_bottom = 500.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 5
 
-[node name="GoldLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="PanelHeader" type="Label" parent="RightPanel/VBoxContainer"]
 layout_mode = 2
-theme_type_variation = &"HeaderLarge"
-text = "골드: 200"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "BOMB SHOOTER"
+horizontal_alignment = 1
 
-[node name="LivesLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="TowerGrid" type="GridContainer" parent="RightPanel/VBoxContainer"]
 layout_mode = 2
-theme_type_variation = &"HeaderMedium"
-text = "생명: 20"
+size_flags_vertical = 3
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 2
 
-[node name="WaveLabel" type="Label" parent="Panel/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderMedium"
-text = "웨이브: 0"
+[node name="BottomPanel" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -80.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 15
 
-[node name="ScoreLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="SpecialAbilityButton" type="Button" parent="BottomPanel"]
+custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_type_variation = &"HeaderMedium"
-text = "점수: 0"
+text = "⚡"
+flat = true
 
-[node name="Spacer" type="Control" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
+[node name="PlayPauseButton" type="Button" parent="BottomPanel"]
+custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-
-[node name="TowerButton" type="Button" parent="Panel/VBoxContainer"]
-layout_mode = 2
-text = "타워 배치 (100G)"
+theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
+text = "▶▶"
 
 [node name="HintLabel" type="Label" parent="."]
 visible = false
-offset_left = 270.0
-offset_top = 10.0
-offset_right = 670.0
-offset_bottom = 50.0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 70.0
+offset_right = 200.0
+offset_bottom = 110.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 0.5, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 18
 text = "힌트 메시지"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="SpeedButton" type="Button" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -80.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 50.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 20
-text = "X1"

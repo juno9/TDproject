@@ -16,7 +16,7 @@ func _ready() -> void:
 	hide() # 처음에는 숨김
 
 func show_menu(tower: Node2D) -> void:
-	print("타워 메뉴 표시 시도: ", tower.name if tower else "null")
+	print("타워 메뉴 표시 시도: ", str(tower.name) if tower else "null")
 	selected_tower = tower
 	if not is_instance_valid(selected_tower):
 		print("타워가 유효하지 않음")
@@ -39,7 +39,12 @@ func show_menu(tower: Node2D) -> void:
 	show()
 
 func _on_upgrade_pressed() -> void:
+	print("=== 타워 메뉴: 업그레이드 버튼 클릭 ===")
+	print("선택된 타워: ", selected_tower)
+	print("타워 유효성: ", is_instance_valid(selected_tower))
+
 	if is_instance_valid(selected_tower):
+		print("upgrade_requested 시그널 발생")
 		upgrade_requested.emit(selected_tower)
 	hide()
 

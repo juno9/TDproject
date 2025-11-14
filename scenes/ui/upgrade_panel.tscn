@@ -1,0 +1,87 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8k3m5n7rap2r"]
+
+[ext_resource type="Script" path="res://scripts/ui/upgrade_panel.gd" id="1_upgrade_panel"]
+
+[node name="UpgradePanel" type="CanvasLayer"]
+layer = 10
+visible = false
+script = ExtResource("1_upgrade_panel")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 15.0
+offset_top = 80.0
+offset_right = 265.0
+offset_bottom = 500.0
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="TitleLabel" type="Label" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "타워 업그레이드"
+horizontal_alignment = 1
+
+[node name="TowerInfoLabel" type="Label" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "타워 레벨: 1"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="AttackSpeedButton" type="Button" parent="Container/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "⚡ 공격속도 업그레이드
+비용: 50G
+현재: 1.0 -> 1.2"
+
+[node name="AttackDamageButton" type="Button" parent="Container/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "💥 공격력 업그레이드
+비용: 50G
+현재: 25 -> 37"
+
+[node name="RangeButton" type="Button" parent="Container/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "🎯 사정거리 업그레이드
+비용: 50G
+현재: 150 -> 180"
+
+[node name="HSeparator2" type="HSeparator" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="SellButton" type="Button" parent="Container/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+text = "💰 타워 판매 (0G)"
+
+[node name="CloseButton" type="Button" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+text = "닫기"
